@@ -4,7 +4,6 @@ import os
 import threading
 from pathlib import Path
 
-import psutil
 import uvicorn
 from fastapi import BackgroundTasks, FastAPI, HTTPException
 from starlette.responses import FileResponse, PlainTextResponse, Response
@@ -20,6 +19,7 @@ from pc_checker.services.update_fetch import (
     trigger_windows_update_scan,
 )
 from pc_checker.state import SharedState
+from pc_checker.volumes_snapshot import volumes_snapshot
 
 WEB_PUBLIC = Path(__file__).resolve().parent.parent / "web" / "public"
 
@@ -52,22 +52,7 @@ def create_app(state: SharedState) -> FastAPI:
 
     @app.get("/api/v1/disks")
     def api_disks() -> dict:
-        rows: list[dict] = []
-        for part in psutil.disk_partitions(all=False):
-            try:
-                u = psutil.disk_usage(part.mountpoint)
-            except OSError:
-                continue
-            total = u.total or 1
-            rows.append(
-                {
-                    "device": part.device or part.mountpoint,
-                    "mountpoint": part.mountpoint,
-                    "free_percent": round(100.0 * u.free / total, 2),
-                    "used_percent": round(100.0 * u.used / total, 2),
-                }
-            )
-        return {"volumes": rows}
+        return volumes_snapshot()
 
     @app.post("/api/v1/diagnostics/scan")
     def api_diagnostics_scan(background_tasks: BackgroundTasks) -> dict:

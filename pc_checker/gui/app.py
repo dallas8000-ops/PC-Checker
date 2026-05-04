@@ -562,6 +562,9 @@ class PCCheckerApp(ctk.CTk):
 
         ctk.CTkLabel(scroll, text="Webhook & scheduled export", font=ctk.CTkFont(weight="bold")).pack(anchor="w", pady=(12, 6))
         row("Webhook URL (POST JSON)", "webhook_url", "https://example.com/hook").insert(0, st.webhook_url)
+        row("Webhook Bearer token (optional; use for Render /api/ingest)", "webhook_bearer_token").insert(
+            0, st.webhook_bearer_token
+        )
         row("Webhook interval (minutes, 0=off)", "webhook_interval_min").insert(0, str(st.webhook_interval_min))
         row("Scheduled export interval (minutes, 0=off)", "scheduled_export_interval_min").insert(
             0, str(st.scheduled_export_interval_min)
@@ -617,6 +620,7 @@ class PCCheckerApp(ctk.CTk):
             alert_disk_free_pct=min(50.0, max(1.0, gfloat("alert_disk_free_pct", 5.0))),
             alert_cooldown_s=max(120.0, gfloat("alert_cooldown_s", 3600.0)),
             webhook_url=gstr("webhook_url"),
+            webhook_bearer_token=gstr("webhook_bearer_token"),
             webhook_interval_min=max(0, gint("webhook_interval_min", 0)),
             scheduled_export_interval_min=max(0, gint("scheduled_export_interval_min", 0)),
             scheduled_export_dir=gstr("scheduled_export_dir"),

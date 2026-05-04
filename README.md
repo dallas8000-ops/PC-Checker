@@ -17,6 +17,18 @@ This tool is **not** a substitute for full malware scans, SMART/hardware burn-in
 
 ---
 
+## Live dashboard on Render (full web UI in the browser)
+
+WMI, Event Log, Defender, and disk diagnostics **only run on Windows**. You cannot move that collector stack onto Render’s Linux hosts. What you *can* do is run the **same dashboard** on Render and feed it with **snapshots pushed from your PC**.
+
+- **`render_web/app.py`** — FastAPI app that serves `pc_checker/web/public` (HTML/CSS/JS) and implements **`/api/v1/*`** the same way the local API does, backed by the **last ingested JSON** from your machine.
+- **Your Windows PC** — Keep using the graphical app; in **Settings**, set **Webhook URL** to `https://<your-service>.onrender.com/api/ingest`, **Webhook Bearer token** to the same value as Render env **`PC_CHECKER_CLOUD_TOKEN`**, and a non‑zero **Webhook interval** (e.g. 5 minutes). Each POST sends a full export (live + **history** for charts, findings, extended, updates, **disk volumes**, disk hints, etc.).
+- **First visit** — Open your Render URL, paste the token in the **Save session** bar at the top so the browser gets an **HttpOnly cookie**; then the dashboard loads data like the local web mode. **Scan / update / Defender** buttons respond with a message that those actions run on the PC only.
+
+**Deploy on Render:** create a **Web Service**, connect this repo, set **Root Directory** to **`.`** (repository root), **Build** `pip install -r render_web/requirements.txt`, **Start** `uvicorn render_web.app:app --host 0.0.0.0 --port $PORT`, add env **`PC_CHECKER_CLOUD_TOKEN`** (long random secret). Optional: use `render.yaml` in the repo as a blueprint. Free dynos spin down when idle — snapshots resume when the PC posts again after wake.
+
+---
+
 ## Requirements
 
 - **OS:** Windows 10/11 (most features are Windows-specific).

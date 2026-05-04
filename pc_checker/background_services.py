@@ -13,6 +13,7 @@ import psutil
 from pc_checker.export_report import write_json_report
 from pc_checker.metrics_db import insert_sample
 from pc_checker.settings_store import app_data_dir, load_settings
+from pc_checker.volumes_snapshot import volumes_snapshot
 
 _log = logging.getLogger(__name__)
 
@@ -33,11 +34,15 @@ def _min_disk_free_pct() -> float:
     return best
 
 
-def _webhook_post(url: str, payload: dict[str, Any]) -> None:
+def _webhook_post(url: str, payload: dict[str, Any], bearer_token: str = "") -> None:
     try:
         import requests
 
-        requests.post(url, json=payload, timeout=20)
+        headers: dict[str, str] = {}
+        t = str(bearer_token).strip()
+        if t:
+            headers["Authorization"] = f"Bearer {t}"
+        requests.post(url, json=payload, headers=headers or None, timeout=30)
     except Exception as e:  # noqa: BLE001
         _log.warning("Webhook failed: %s", e)
 
@@ -95,8 +100,9 @@ def _background_loop(app: Any, stop: threading.Event) -> None:
                 if now - last_webhook >= interval_s:
                     last_webhook = now
                     snap = dict(app.shared.export_snapshot())
+                    snap["disks"] = volumes_snapshot()
                     snap["meta"] = {"kind": "webhook", "ts": now}
-                    _webhook_post(s.webhook_url, snap)
+                    _webhook_post(s.webhook_url, snap, s.webhook_bearer_token)
 
             if s.scheduled_export_interval_min > 0:
                 interval_s = s.scheduled_export_interval_min * 60

@@ -52,6 +52,7 @@ class AppSettings:
     alert_disk_free_pct: float = 5.0
     alert_cooldown_s: float = 3600.0
     webhook_url: str = ""
+    webhook_bearer_token: str = ""
     webhook_interval_min: int = 0
     scheduled_export_interval_min: int = 0
     scheduled_export_dir: str = ""

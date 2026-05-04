@@ -1,0 +1,12 @@
+# https://render.com/docs/blueprint-spec
+# Deploy from repository root so pc_checker/web/public is available to the service.
+# Set PC_CHECKER_CLOUD_TOKEN in the Render dashboard (Environment).
+
+services:
+  - type: web
+    name: pc-checker-live
+    runtime: python
+    rootDir: .
+    buildCommand: pip install -r render_web/requirements.txt
+    startCommand: uvicorn render_web.app:app --host 0.0.0.0 --port $PORT
+    plan: free

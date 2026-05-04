@@ -136,10 +136,16 @@ class SharedState:
             return {
                 "export_format": 1,
                 "live": dict(self._live),
+                "history": {
+                    "timestamp": list(self._history_ts),
+                    "cpu_percent": list(self._history_cpu),
+                    "ram_percent": list(self._history_ram),
+                },
                 "findings": list(self._findings),
                 "software_findings": list(self._software_findings),
                 "disk_hints": dict(self._disk_hints),
                 "extended": dict(self._extended_diagnostics),
+                "scan_compare_summary": self._scan_compare_summary,
                 "updates": {
                     "defender": dict(self._defender),
                     "windows_update": dict(self._windows_updates),
