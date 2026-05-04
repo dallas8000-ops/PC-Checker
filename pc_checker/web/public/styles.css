@@ -1,0 +1,281 @@
+:root {
+  --bg: #0f1114;
+  --card: #1a1d23;
+  --border: #2a3038;
+  --text: #e8eaed;
+  --muted: #9aa0a6;
+  --accent: #3d8bfd;
+  --cpu: #3d8bfd;
+  --ram: #e67e22;
+  --warn: #f4b400;
+  --bad: #ea4335;
+  --ok: #34a853;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.45;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+  background: #12151a;
+}
+
+h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.sub {
+  margin: 0.35rem 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+  max-width: 42rem;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+button {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  padding: 0.45rem 0.9rem;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+button:hover {
+  filter: brightness(1.08);
+}
+
+.link {
+  color: var(--accent);
+  text-decoration: none;
+  font-size: 0.875rem;
+}
+
+.grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  padding: 1rem 1.5rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  .span-2 {
+    grid-column: span 1 !important;
+  }
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1rem 1.1rem;
+}
+
+.span-2 {
+  grid-column: span 2;
+}
+
+.card h2 {
+  margin: 0 0 0.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #bdc1c6;
+}
+
+#chart {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 6px;
+  background: #12151a;
+}
+
+.meter {
+  margin-bottom: 0.75rem;
+}
+
+.meter label {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-bottom: 0.25rem;
+}
+
+.bar {
+  height: 10px;
+  background: #2a3038;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.bar > i {
+  display: block;
+  height: 100%;
+  width: 0%;
+  border-radius: 5px;
+  background: linear-gradient(90deg, var(--cpu), #6eb6ff);
+}
+
+#ram-bar {
+  background: linear-gradient(90deg, var(--ram), #f5b041);
+}
+
+.mono {
+  font-family: ui-monospace, Consolas, monospace;
+}
+
+.small {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.percpu {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.percpu-row {
+  display: grid;
+  grid-template-columns: 4rem 1fr 2.5rem;
+  gap: 0.5rem;
+  align-items: center;
+  font-size: 0.75rem;
+}
+
+.percpu-row .bar {
+  height: 8px;
+}
+
+.disks {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.disk-row {
+  display: grid;
+  grid-template-columns: 1fr 5rem;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  align-items: center;
+}
+
+.disk-row .bar {
+  grid-column: 1 / -1;
+  height: 8px;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 0.35rem 0.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+th {
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.findings {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.finding {
+  border-left: 3px solid var(--border);
+  padding: 0.5rem 0.65rem;
+  background: #12151a;
+  border-radius: 0 6px 6px 0;
+}
+
+.finding.critical {
+  border-left-color: var(--bad);
+}
+
+.finding.warn {
+  border-left-color: var(--warn);
+}
+
+.finding.ok {
+  border-left-color: var(--ok);
+}
+
+.finding strong {
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.row {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.5rem;
+}
+
+.pre {
+  max-height: 320px;
+  overflow: auto;
+  background: #12151a;
+  padding: 0.75rem;
+  border-radius: 6px;
+  font-size: 0.72rem;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.foot {
+  padding: 0.75rem 1.5rem;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 0.75rem;
+}

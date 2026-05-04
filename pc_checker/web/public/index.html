@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PC Checker</title>
+    <link rel="stylesheet" href="/assets/styles.css" />
+  </head>
+  <body>
+    <header class="top">
+      <div>
+        <h1>PC Checker</h1>
+        <p class="sub">Local dashboard — HTML/CSS in your browser. API + live metrics on this machine only.</p>
+        <p class="sub" id="attribution-banner" style="margin-top: 0.5rem; opacity: 0.9"></p>
+      </div>
+      <div class="actions">
+        <button type="button" id="btn-scan">Run diagnostics scan</button>
+        <button type="button" id="btn-updates">Refresh updates</button>
+        <a class="link" href="/docs" target="_blank" rel="noopener">OpenAPI docs</a>
+      </div>
+    </header>
+
+    <main class="grid">
+      <section class="card span-2">
+        <h2>CPU &amp; RAM trend</h2>
+        <canvas id="chart" width="900" height="220" aria-label="CPU and RAM history chart"></canvas>
+      </section>
+
+      <section class="card">
+        <h2>Live</h2>
+        <div class="meter">
+          <label>CPU (all cores)</label>
+          <div class="bar"><i id="cpu-bar"></i></div>
+          <span id="cpu-val">—</span>
+        </div>
+        <div class="meter">
+          <label>RAM</label>
+          <div class="bar"><i id="ram-bar"></i></div>
+          <span id="ram-val">—</span>
+        </div>
+        <p class="mono small" id="swap-val">Page file: —</p>
+        <p class="mono small" id="io-val">Disk I/O: —</p>
+        <p class="mono small" id="temp-val">Temperature: —</p>
+        <p class="mono small" id="uptime-val">Uptime: —</p>
+      </section>
+
+      <section class="card">
+        <h2>Per-CPU</h2>
+        <div id="percpu" class="percpu"></div>
+      </section>
+
+      <section class="card span-2">
+        <h2>Disk space</h2>
+        <div id="disks" class="disks"></div>
+      </section>
+
+      <section class="card span-2">
+        <h2>Top processes</h2>
+        <div class="table-wrap">
+          <table id="procs">
+            <thead>
+              <tr>
+                <th>CPU %</th>
+                <th>RAM %</th>
+                <th>PID</th>
+                <th>Name</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="card span-2">
+        <h2>Hardware diagnostics</h2>
+        <div id="findings" class="findings"></div>
+      </section>
+
+      <section class="card span-2">
+        <h2>Software insights</h2>
+        <div id="soft" class="findings"></div>
+      </section>
+
+      <section class="card span-2">
+        <h2>Disk &amp; cleanup hints</h2>
+        <p class="small">
+          Install-path heuristics and common cache folders (PC Checker does not delete or move files). Run diagnostics
+          scan to refresh.
+        </p>
+        <pre id="disk-hints-pre" class="mono pre"></pre>
+      </section>
+
+      <section class="card span-2">
+        <h2>Extended diagnostics &amp; compare</h2>
+        <p class="small">Memory commit, disk reliability counters, startup Run keys, services, tasks sample, 14-day error trend. Run diagnostics scan to refresh.</p>
+        <pre id="extended-pre" class="mono pre"></pre>
+      </section>
+
+      <section class="card span-2">
+        <h2>Updates &amp; Defender</h2>
+        <div class="row">
+          <button type="button" id="btn-def">Defender signatures</button>
+          <button type="button" id="btn-wu">Windows Update scan</button>
+        </div>
+        <p id="action-msg" class="small"></p>
+        <pre id="updates-pre" class="mono pre"></pre>
+      </section>
+    </main>
+
+    <footer class="foot">
+      <div>
+        <span id="meta"></span>
+        <p id="attribution" class="small" style="margin: 0.35rem 0 0"></p>
+      </div>
+    </footer>
+
+    <script src="/assets/app.js"></script>
+  </body>
+</html>

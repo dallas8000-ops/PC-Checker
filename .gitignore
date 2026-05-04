@@ -1,0 +1,43 @@
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+.eggs/
+dist/
+build/
+*.egg
+pip-wheel-metadata/
+
+# PyInstaller
+*.manifest
+*.spec.bak
+
+# IDE / OS
+.idea/
+.vscode/
+*.swp
+Thumbs.db
+Desktop.ini
+
+# Local / secrets
+.env
+.env.local
+*.local.json
+
+# Tests / coverage
+.coverage
+htmlcov/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# App-generated (if ever under repo root)
+*.log
