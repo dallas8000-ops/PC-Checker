@@ -1,6 +1,6 @@
 # PC Checker
 
-**Repository:** [github.com/dallas8000-ops/PC-Checker](https://github.com/dallas8000-ops/PC-Checker)
+**Repository:** [https://github.com/dallas8000-ops/PC-Checker](https://github.com/dallas8000-ops/PC-Checker)
 
 ```powershell
 git clone https://github.com/dallas8000-ops/PC-Checker.git
