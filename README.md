@@ -49,6 +49,10 @@ The tool is **not** a substitute for full malware scans, SMART / burn-in tests, 
 
 ## Optional: cloud mirror (Render)
 
+**Live URLs:**
+- [https://react-store-catalog-1.onrender.com](https://react-store-catalog-1.onrender.com)
+- [https://react-store-catalog.onrender.com](https://react-store-catalog.onrender.com)
+
 Collectors **cannot** run on Linux hosts. The optional **`render_web/`** service serves the **same** static dashboard and compatible **`/api/v1/*`** responses from the **last JSON snapshot** POSTed by your PC (**Settings → Webhook** to `/api/ingest`, Bearer token aligned with env `PC_CHECKER_CLOUD_TOKEN`). See `render.yaml` and `render_web/app.py` for deploy shape. **Actions** (scan, Defender, WU) still execute only on Windows; the cloud UI explains that when invoked.
 
 ---
@@ -175,3 +179,12 @@ Output: **`dist\PCChecker.exe`** (windowed). The script does not auto-launch the
 ## Development
 
 Run `python launcher.py --no-elevate` for a predictable console. See `pc_checker/elevation.py` for `PC_CHECKER_KEEP_CONSOLE` behavior.
+
+---
+
+## Test status (current build)
+
+- **Commit under test:** `1dfdfbd`
+- **Command run:** `python -m pytest -q`
+- **Result:** `2 passed in 0.03s`
+- **Notes:** Current automated coverage is minimal (`tests/test_finding.py`); most validation today is runtime/manual on Windows (GUI flow, WMI/PowerShell collectors, API routes, export actions).
